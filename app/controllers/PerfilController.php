@@ -18,48 +18,43 @@ class PerfilController extends Controller
             exit;
         }
 
-        //ATUALIZAÇÃO DO CLIENTE 
-        //Analisar se o form foi enviado 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $dadosAtualizados = [
-                'nome' => $_POST['nome'],
-                'email' => $_POST['email'],
-                'telefone' => $_POST['telefone'],
-                'id_uf' => $_POST['id_uf']
+                'nome'      => $_POST['nome'],
+                'email'     => $_POST['email'],
+                'telefone'  => $_POST['telefone'],
+                'id_uf'     => $_POST['id_uf'], 
             ];
         
             if (!empty($_POST['senha'])) {
                 $dadosAtualizados['senha'] = $_POST['senha'];
             }
- 
-            // Junta os dados do formulário
-            $dadosEnviar = $dadosAtualizados;
-            // Se houver imagem, adiciona como CURLFile
+        
             if (isset($_FILES['foto_cliente']) && $_FILES['foto_cliente']['error'] === UPLOAD_ERR_OK) {
-                $dadosEnviar['foto_cliente'] = new CURLFile(
+                $dadosAtualizados['foto_cliente'] = new CURLFile(
                     $_FILES['foto_cliente']['tmp_name'],
                     $_FILES['foto_cliente']['type'],
                     $_FILES['foto_cliente']['name']
                 );
             }
- 
+        
             $urlAtualizar = BASE_API . "atualizarCliente/" . $dadosToken['id'];
+        
             $chAtualizar = curl_init($urlAtualizar);
             curl_setopt($chAtualizar, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($chAtualizar, CURLOPT_POST, true);
-            curl_setopt($chAtualizar, CURLOPT_POSTFIELDS, $dadosEnviar); // <- Agora com suporte a imagem
- 
+            curl_setopt($chAtualizar, CURLOPT_POST, true); // <- MANTÉM COMO POST
+            curl_setopt($chAtualizar, CURLOPT_POSTFIELDS, $dadosAtualizados);
+        
             curl_setopt($chAtualizar, CURLOPT_HTTPHEADER, [
                 'Authorization: Bearer ' . $_SESSION['token']
-                // Sem Content-Type manual
             ]);
- 
+        
             $resposta = curl_exec($chAtualizar);
             $statusCodeAtualizar = curl_getinfo($chAtualizar, CURLINFO_HTTP_CODE);
             curl_close($chAtualizar);
- 
+        
             $response = json_decode($resposta, true);
- 
+        
             if ($statusCodeAtualizar === 200) {
                 $_SESSION['msg_sucesso'] = 'Perfil atualizado com sucesso!';
                 header("Location: " . BASE_URL . "index.php?url=perfil");
@@ -68,6 +63,7 @@ class PerfilController extends Controller
                 $_SESSION['msg_erro'] = "Erro ao atualizar o perfil! Código: $statusCodeAtualizar";
             }
         }
+        
 
         //Buscar os clientes na API
         $url = BASE_API . "buscarCliente/" . $dadosToken['id'];
@@ -109,7 +105,7 @@ class PerfilController extends Controller
 
 
         $dados = array();
-        $dados['titulo'] = 'Barbernac - Perfil';
+        $dados['titulo'] = 'appbarber - Perfil';
 
         $dados['cliente'] = $cliente;
         $dados['estados'] = $estados;

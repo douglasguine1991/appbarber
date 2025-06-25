@@ -14,47 +14,36 @@
         </label>
         <small>Clique na imagem para alterar sua foto de perfil</small>
 
-        <label for="nome">NOME:</label>
-        <input type="text" name="nome" id="nome_cliente" value="<?= htmlspecialchars($cliente['nome']) ?>" required>
+        <div class="profile-box">
+                <form method="post" class="container">
+                    <label>NOME:</label>
+                    <input type="text" class="input_perfil" name="nome" value="<?= htmlspecialchars($cliente['nome']) ?>" required>
+ 
+                    <label><strong>EMAIL:</strong></label>
+                    <input type="email" class="input_perfil" name="email" value="<?= htmlspecialchars($cliente['email']) ?>" required>
+ 
+                    <label><strong>TELEFONE:</strong></label>
+                    <input type="text" class="input_perfil" name="telefone" value="<?= htmlspecialchars($cliente['telefone']) ?>" required>
 
-        <label for="email">EMAIL:</label>
-        <input type="email" name="email" value="<?= htmlspecialchars($cliente['email']) ?>" required>
-
-        <label for="telefone">TELEFONE:</label>
-        <input type="text" name="telefone" id="telefone_cliente" value="<?= htmlspecialchars($cliente['telefone']) ?>" required>
-
-        <label for="tipo_cliente">TIPO DE CLIENTE:</label>
-        <select name="tipo_cliente" id="tipo_cliente" required>
-            <option value="">Selecione</option>
-            <option value="Física" <?= $cliente['tipo_cliente'] === 'Física' ? 'selected' : '' ?>>Pessoa Física</option>
-            <option value="Jurídica" <?= $cliente['tipo_cliente'] === 'Jurídica' ? 'selected' : '' ?>>Pessoa Jurídica</option>
-        </select>
-
-        <label for="cpf_cnpj_cliente" id="labelCpfCnpj"><?= $cliente['tipo_cliente'] === 'Jurídica' ? 'CNPJ' : 'CPF' ?>:</label>
-        <input type="text" name="cpf_cnpj_cliente" id="cpf_cnpj_cliente" value="<?= htmlspecialchars($cliente['cpf_cnpj_cliente']) ?>" required>
-
-        <label for="data_nasc_cliente">DATA DE NASCIMENTO:</label>
-        <input type="date" name="data_nasc_cliente" value="<?= htmlspecialchars($cliente['data_nasc_cliente']) ?>" required>
-
-        <label for="id_uf">ESTADO:</label>
-        <select name="id_uf" id="id_uf" required>
-            <option value="">Selecione o estado</option>
-            <?php foreach ($estados as $estado): ?>
-                <option value="<?= $estado['id_uf'] ?>" <?= $cliente['id_uf'] == $estado['id_uf'] ? 'selected' : '' ?>>
-                    <?= $estado['sigla_uf'] ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-
-        <label for="status_cliente">STATUS DO CLIENTE:</label>
-        <input type="text" name="status_cliente" id="status_cliente" value="<?= htmlspecialchars($cliente['status_cliente']) ?>">
-
-        <label for="senha">ALTERAR SENHA (OPCIONAL):</label>
-        <input type="password" name="senha" placeholder="Nova senha">
-
-        <button class="btn">SALVAR ALTERAÇÕES</button>
-        <a href="<?= BASE_URL ?>index.php?url=menu" class="btn btn-secondary">VOLTAR</a>
-    </form>
+ 
+                    <label><strong>ESTADO:</strong></label>
+                    <select name="id_uf" class="form-control" required>
+                        <option value="">Selecione o estado</option>
+                        <?php foreach ($estados as $estado): ?>
+                            <option value="<?= $estado['id_uf'] ?>" <?= $cliente['id_uf'] == $estado['id_uf'] ? 'selected' : '' ?>>
+                                <?= $estado['sigla_uf'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+ 
+                    <label><strong>ALTERAR SENHA (OPCIONAL):</strong></label>
+                    <input type="password" name="senha" class="form-control" placeholder="Nova senha">
+ 
+                    <button type="submit" class="btn btn-custom">SALVAR ALTERAÇÕES</button>
+                </form>
+ 
+                <a href="<?php echo BASE_URL; ?>index.php?url=menu" class="menu-button exit">VOLTAR</a>
+            </div>
 
     <?php if (!empty($_SESSION['msg_sucesso'])): ?>
         <div class="alert sucesso"><?= $_SESSION['msg_sucesso'] ?></div>

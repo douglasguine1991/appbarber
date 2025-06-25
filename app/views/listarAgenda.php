@@ -23,12 +23,13 @@ require_once('template/head.php');
                                 default => 'gray',
                             };
                         ?>
-                        <div class="card-agendamento">
-                            <p><strong>Funcionário:</strong> <?= htmlspecialchars($item['nome_funcionario']) ?></p>
-                            <p><strong>Serviço:</strong> <?= htmlspecialchars($item['nome_servico']) ?></p>
-                            <p><strong>Data do Agendamento:</strong> <?= date('d/m/Y H:i', strtotime($item['data_agendamento'])) ?></p>
-                            <p style="color: <?= $statusColor ?>;" class="status"><strong>Status:</strong> <?= htmlspecialchars($status) ?></p>
+                   <div class="card-agendamento">
+                            <p><span>Funcionário:</span> <?= $item['nome_funcionario'] ?></p>
+                            <p><span>Data Agenda:</span> <?= date('d/m/Y H:i', strtotime($item['data_agendamento'])) ?></p>
+                            <p><span>Serviço:</span> <?= $item['nome_servico'] ?></p>
+                            <p style="color: <?= $statusColor ?>;" class="status">Status: <?= $status ?></p>
                         </div>
+ 
                     <?php endforeach; ?>
                 <?php else : ?>
                     <p>Nenhum agendamento encontrado.</p>

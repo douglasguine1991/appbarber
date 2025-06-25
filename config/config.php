@@ -5,7 +5,9 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // Definir uma url base
-define('BASE_URL','http://localhost/appbarber/public/'); 
+// define('BASE_URL','http://localhost/appbarber/public/'); 
+
+define('BASE_URL','https://agenciatipi02.smpsistema.com.br/visiontech/appbarber/public/');
 
 //Definir uma api BASE
 define('BASE_API','https://agenciatipi02.smpsistema.com.br/visiontech/barbernac/public/api/');

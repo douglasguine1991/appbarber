@@ -29,5 +29,20 @@
             </div>
         </form>
     </div>
+
+    <script>
+        if ('serviceWorker' in navigator){
+            window.addEventListener('load', function(){
+                navigator.serviceWorker.register('service_worker.js')
+                .then(function (registration){
+                    console.log('Service Worker registrado', registration.scope);
+                })
+                .catch(function(error){
+                    console.log('Erro ao registrar o service worker', error)
+                });
+            });
+        }
+    </script>
+    
 </body>
 </html>
